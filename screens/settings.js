@@ -1,9 +1,27 @@
 
 import React from "react";
-import { StyleSheet, Text, View, Switch, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Switch, TouchableOpacity, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "../ThemeContext/ThemeContext";
+import AntDesign from "react-native-vector-icons/AntDesign";
+
+
+const data = [
+  { id: '1', title: 'Language' },
+  { id: '2', title: 'My Profile' },
+  { id: '3', title: 'Contact Us' },
+  { id: '4', title: 'Change Password' },
+  { id: '5', title: 'Privacy Policy' },
+]
+
+const Item = ({ title, onPress, theme }) => (
+  <TouchableOpacity onPress={onPress}>
+    <View style={[styles.group, { color: theme === "light" ? "black" : "white" }]}>
+      <Text style={[styles.title, { color: theme === "light" ? "black" : "white" }]}>{title}</Text>
+      <AntDesign name="right" size={24} color={theme === "light" ? "black" : "white"} />
+    </View>
+  </TouchableOpacity>
+)
 
 const Setting = () => {
   const { theme, toggleTheme } = useTheme();
@@ -16,59 +34,18 @@ const Setting = () => {
         Settings
       </Text>
 
-      {/* Setting Items */}
-      <View style={{marginBottom: 30, marginTop: 30}}>
-      <TouchableOpacity>
-      <View style={styles.itemContainer}>
-        <Text style={[styles.itemText, { color: theme === "light" ? "black" : "white" }]}>Language</Text>
-        <Ionicons
-          name="chevron-forward-outline"
-          size={24}
-          color={theme === "light" ? "black" : "white"}
+      <View>
+        <FlatList
+          data={data}
+          renderItem={({ item }) =>
+            <View >
+              <Item title={item.title} />
+            </View>
+          }
+          keyExtractor={item => item.id}
         />
       </View>
-      </TouchableOpacity>
-      <TouchableOpacity>
-      <View style={styles.itemContainer}>
-        <Text style={[styles.itemText, { color: theme === "light" ? "black" : "white" }]}>My Profile</Text>
-        <Ionicons
-          name="chevron-forward-outline"
-          size={24}
-          color={theme === "light" ? "black" : "white"}
-        />
-      </View>
-      </TouchableOpacity>
-      <TouchableOpacity>
-      <View style={styles.itemContainer}>
-        <Text style={[styles.itemText, { color: theme === "light" ? "black" : "white" }]}>Contact Us</Text>
-        <Ionicons
-          name="chevron-forward-outline"
-          size={24}
-          color={theme === "light" ? "black" : "white"}
-        />
-      </View>
-      </TouchableOpacity>
-      <TouchableOpacity>
-      <View style={styles.itemContainer}>
-        <Text style={[styles.itemText, { color: theme === "light" ? "black" : "white" }]}>Change Password</Text>
-        <Ionicons
-          name="chevron-forward-outline"
-          size={24}
-          color={theme === "light" ? "black" : "white"}
-        />
-      </View>
-      </TouchableOpacity>
-      <TouchableOpacity>
-      <View style={styles.itemContainer}>
-        <Text style={[styles.itemText, { color: theme === "light" ? "black" : "white" }]}>Privacy Policy</Text>
-        <Ionicons
-          name="chevron-forward-outline"
-          size={24}
-          color={theme === "light" ? "black" : "white"}
-        />
-      </View>
-      </TouchableOpacity>
-      </View>
+     
 
       {/* Theme Setting */}
       <View style={[styles.itemContainer, styles.themeContainer]}>
@@ -115,11 +92,32 @@ const styles = StyleSheet.create({
   themeText: {
     fontSize: 20,
     fontWeight: "bold",
+    paddingTop: 20
   },
   switchContainer: {
-    transform: [{ scaleX: 2.5 }, { scaleY: 2.5 }],
+    paddingTop: 20,
+    transform: [{ scaleX: 1.5}, { scaleY: 1.5 }],
     paddingHorizontal: 10,
   },
+  group: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderBottomColor: 'grey',
+    borderBottomWidth: 1,
+    marginHorizontal: 20,
+    paddingLeft: 5,
+    borderRadius: 10,
+  },
+  title: {
+    fontSize: 18,
+    paddingVertical: 10,
+    marginVertical: 8,
+    fontWeight: 'bold',
+  },
+
 });
 
 export default Setting;

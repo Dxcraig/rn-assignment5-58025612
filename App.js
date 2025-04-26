@@ -1,12 +1,11 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 import Home from "./screens/home";
-import { MaterialIcons } from "@expo/vector-icons";
 import Cards from "./screens/my-card";
 import Setting from "./screens/settings";
 import Statistics from "./screens/statistics";
 import { ThemeProvider, useTheme } from "./ThemeContext/ThemeContext";
+import { Image, StyleSheet } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -15,12 +14,25 @@ const AppNavigator = () => {
 
   return (
     <Tab.Navigator
+    tabBarOptions = {{
+      showLabel: false,
+      style: {
+          position: 'absolute',
+          bottom: 25,
+          left: 20,
+          right: 20,
+          elevation: 0,
+          backgroundColor: '#fff',
+          borderRadius: 15,
+          height: 90,
+          ...styles.shadow
+      },
+  }}
       screenOptions={{
         tabBarStyle: {
           backgroundColor: theme === "light" ? "#fff" : "#27273a",
-          paddingTop: 15, // Add space to the top
-          height: 80,
-          paddingBottom: 15, // Add space to the bottom
+          position: "absolute",
+          tabBarActiveTintColor: 'blue' 
         },
         tabBarLabelStyle: {
             paddingBottom: 10, // Adjust the padding for the label
@@ -32,8 +44,14 @@ const AppNavigator = () => {
         component={Home}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="home" color={color} size={size} />
+          tabBarIcon: ({ focused }) => (
+            <Image source={require('./assets/home.png')}
+            resizeMode="contain"
+              style={{
+                width: 25,
+                height: 25,
+                tintColor: focused ? 'blue' : 'gray'
+              }} />
           ),
         }}
       />
@@ -41,8 +59,14 @@ const AppNavigator = () => {
         name="My Cards"
         component={Cards}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="credit-card" color={color} size={size} />
+          tabBarIcon: ({focused}) => (
+            <Image source={require('./assets/myCards.png')}
+            resizeMode="contain"
+              style={{
+                width: 25,
+                height: 25,
+                tintColor: focused ? 'blue' : 'gray'
+              }} />
           ),
         }}
       />
@@ -50,8 +74,14 @@ const AppNavigator = () => {
         name="Statistics"
         component={Statistics}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="bar-chart" color={color} size={size} />
+          tabBarIcon: ({ focused}) => (
+            <Image source={require('./assets/statictics.png')} 
+            resizeMode="contain"
+              style={{
+                width: 25,
+                height: 25,
+                tintColor: focused ? 'blue' : 'gray'
+              }}/>
           ),
         }}
       />
@@ -60,8 +90,14 @@ const AppNavigator = () => {
         component={Setting}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="settings" color={color} size={size} />
+          tabBarIcon: ({focused}) => (
+            <Image source={require('./assets/settings.png')} 
+            resizeMode="contain"
+              style={{
+                width: 25,
+                height: 25,
+                tintColor: focused ? 'blue' : 'gray'
+              }}/>
           ),
         }}
       />
@@ -78,3 +114,16 @@ export default function App() {
     </ThemeProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  shadow: {
+      shadowColor: '#7F5D40',
+      shadowOffset: {
+          width: 0,
+          height: 10,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.5,
+      elevation: 5,
+  }
+})
