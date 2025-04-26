@@ -14,11 +14,11 @@ const data = [
   { id: '5', title: 'Privacy Policy' },
 ]
 
-const Item = ({ title, onPress, theme }) => (
+const Item = ({ title, onPress }) => (
   <TouchableOpacity onPress={onPress}>
-    <View style={[styles.group, { color: theme === "light" ? "black" : "white" }]}>
-      <Text style={[styles.title, { color: theme === "light" ? "black" : "white" }]}>{title}</Text>
-      <AntDesign name="right" size={24} color={theme === "light" ? "black" : "white"} />
+    <View style={[styles.group]}>
+      <Text style={[styles.title]}>{title}</Text>
+      <AntDesign name="right" size={24} />
     </View>
   </TouchableOpacity>
 )
@@ -34,7 +34,7 @@ const Setting = () => {
         Settings
       </Text>
 
-      <View>
+      <View >
         <FlatList
           data={data}
           renderItem={({ item }) =>
